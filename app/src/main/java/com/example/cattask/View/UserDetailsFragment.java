@@ -23,7 +23,7 @@ import static com.example.cattask.View.MainActivity.userdata;
 public class UserDetailsFragment extends Fragment {
 
     TextView id , fullname , username , email , mobile , gender , creationDate ;
-    Button updateImage;
+    Button updateImage , allusers;
     String userid;
     public UserDetailsFragment() {
         // Required empty public constructor
@@ -51,6 +51,8 @@ public class UserDetailsFragment extends Fragment {
         gender = (TextView) view.findViewById(R.id.gender);
         creationDate = (TextView) view.findViewById(R.id.creationDate);
         updateImage= (Button) view.findViewById(R.id.updateImage);
+        allusers= (Button) view.findViewById(R.id.allusers);
+
 
         userid = userdata.getId();
 
@@ -59,6 +61,7 @@ public class UserDetailsFragment extends Fragment {
             StrictMode.setThreadPolicy(policy);
 
             Response<List<User>> response = Webservice.getInstance().getApi().getUserDetails( userid ).execute();
+
             User user = response.body().get(0);
             id.setText(userid);
             email.setText(user.getEmail());
@@ -67,7 +70,7 @@ public class UserDetailsFragment extends Fragment {
             username.setText(user.getUsername());
             creationDate.setText(user.getCreation_date());
 
-            if (user.equals("0"))
+            if (user.getFkgenderid()==1)
                 gender.setText("Male");
             else
                 gender.setText("Female");
@@ -83,7 +86,22 @@ public class UserDetailsFragment extends Fragment {
             }
         });
 
+        allusers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToAllUsers();
+            }
+        });
+
+
         return view;
+    }
+
+    private void goToAllUsers() {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, new AllUsersFragment())
+                .commit();
     }
 
     private void goToUpdateProfile() {

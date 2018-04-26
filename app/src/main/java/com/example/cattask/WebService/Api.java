@@ -26,4 +26,7 @@ public interface Api {
     @POST("users/update_imageprofile/{id}")
     Call<Object> uploadPicture(@Path(value = "id", encoded = true) String id ,@Body Image string);
 
+    @GET("allusers")
+    Call<List<User>> getAllUsers();
+
 }

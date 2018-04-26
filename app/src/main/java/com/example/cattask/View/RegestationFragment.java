@@ -51,11 +51,11 @@ public class RegestationFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.maleRadioButton: {
-                        gender = 0;
+                        gender = 1;
                         break;
                     }
                     case R.id.femaleRadioButton: {
-                        gender = 1;
+                        gender = 2;
                         break;
                     }
                 }
@@ -82,12 +82,13 @@ public class RegestationFragment extends Fragment {
         user.setPassword(password.getText().toString());
         user.setConfirm_password(confirmPassword.getText().toString());
         user.setMobile_number(mobile.getText().toString());
+        user.setFkgenderid(gender);
 
         Webservice.getInstance().getApi().Register( user ).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
-                    if (!response.body().getState().equals("1")) {
+                    if (response.body().getState().equals("1")) {
                         Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                         goToLogin();
                     }

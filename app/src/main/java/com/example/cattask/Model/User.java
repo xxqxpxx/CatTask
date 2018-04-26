@@ -9,7 +9,6 @@ public class User {
 
     }
 
-
     @SerializedName("firstname")
     public String firstname;
     @SerializedName("midname")
@@ -27,7 +26,7 @@ public class User {
     @SerializedName("mobile_number")
     public String mobile_number;
     @SerializedName("fk_gender_id")
-    public String fkgenderid;
+    public int fkgenderid;
     @SerializedName("id")
     public String id;
     @SerializedName("fullname")
@@ -105,11 +104,11 @@ public class User {
         this.mobile_number = mobile_number;
     }
 
-    public String getFkgenderid() {
+    public int getFkgenderid() {
         return fkgenderid;
     }
 
-    public void setFkgenderid(String fkgenderid) {
+    public void setFkgenderid(int fkgenderid) {
         this.fkgenderid = fkgenderid;
     }
 

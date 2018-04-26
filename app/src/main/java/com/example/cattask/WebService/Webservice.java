@@ -3,7 +3,10 @@ package com.example.cattask.WebService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -17,6 +20,13 @@ public class Webservice {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(60, TimeUnit.SECONDS);
+        httpClient.readTimeout(60, TimeUnit.SECONDS);
+        httpClient.addInterceptor(logging);
+
         Retrofit retrofit = new Retrofit.Builder().client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(Services.MAIN_URL)
