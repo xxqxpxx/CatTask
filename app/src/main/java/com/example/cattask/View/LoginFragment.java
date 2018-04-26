@@ -47,7 +47,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                login(email.getText().toString() , password.getText().toString());
+                login(email.getText().toString().trim() , password.getText().toString().trim() );
             }
         });
 
@@ -67,7 +67,10 @@ public class LoginFragment extends Fragment {
 
     public void login( String user, String pass) {
 
+        if (user.isEmpty() || pass.isEmpty())
+            Toast.makeText(getActivity(), "Please enter your credentials correctly ", Toast.LENGTH_LONG).show();
 
+        else
         Webservice.getInstance().getApi().Login( user , pass ).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
